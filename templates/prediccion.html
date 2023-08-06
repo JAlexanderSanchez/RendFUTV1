@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PREDICCIÓN</title>
+</head>
+<body>
+    <h1 style="text-align:center">PÁGINA DE PREDICCIÓN</h1>
+    <div id="champions-league-info"></div>
+    <button onclick="obtenerEquipos()">Equipos</button>
+    <div id="equipos-info"></div>
+
+    <script>
+        // ... código JavaScript previo ...
+
+        // Obtener la información de la liga Champions League
+        function obtenerChampionsLeague() {
+            const xhr = new XMLHttpRequest();
+            const url = '/champions_league';
+
+            xhr.open('GET', url);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const championsLeague = JSON.parse(xhr.responseText);
+                    mostrarChampionsLeagueInfo(championsLeague);
+                } else {
+                    alert('Error al obtener la información de la liga Champions League. Por favor, inténtalo nuevamente más tarde.');
+                }
+            };
+
+            xhr.send();
+        }
+
+        // Mostrar la información de la liga Champions League en el DOM
+        function mostrarChampionsLeagueInfo(championsLeague) {
+            const championsLeagueInfo = document.getElementById('champions-league-info');
+
+            // Mostrar la información de la liga en el elemento del DOM
+            const paragraph = document.createElement('p');
+            paragraph.textContent = `Liga Disponible: ${championsLeague.name} (ID: ${championsLeague.id})`;
+            championsLeagueInfo.appendChild(paragraph);
+        }
+
+        // Llamar a la función para obtener la información de la liga Champions League al cargar la página
+        window.onload = function() {
+            obtenerChampionsLeague();
+        };
+
+        // Obtener los equipos de la liga Champions League
+        function obtenerEquipos() {
+            const xhr = new XMLHttpRequest();
+            const url = '/equipos_champions_league';
+
+            xhr.open('GET', url);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const equipos = JSON.parse(xhr.responseText);
+                    mostrarEquiposInfo(equipos);
+                } else {
+                    alert('Error al obtener los equipos de la liga Champions League. Por favor, inténtalo nuevamente más tarde.');
+                }
+            };
+
+            xhr.send();
+        }
+
+        // Mostrar la información de los equipos en el DOM
+        function mostrarEquiposInfo(equipos) {
+            const equiposInfo = document.getElementById('equipos-info');
+
+            // Vaciar la lista de equipos antes de mostrar los nuevos
+            equiposInfo.innerHTML = '';
+
+            // Mostrar los equipos en la lista
+            const listaEquipos = document.createElement('ul');
+            equipos.forEach(function(equipo) {
+                const li = document.createElement('li');
+                li.textContent = `${equipo.name} (ID: ${equipo.id})`;
+                listaEquipos.appendChild(li);
+            });
+            equiposInfo.appendChild(listaEquipos);
+        }
+    </script>
+</body>
+</html>

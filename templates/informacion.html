@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Información</title>
+</head>
+
+<style>
+    body {
+        background-color: #8E8E8E;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23959595' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%239c9c9c' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%23a3a3a3' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%23aaaaaa' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%23B1B1B1' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    .h1 {
+
+
+    }
+
+    .btnelegir {
+        border: 0;
+        background-image: linear-gradient(
+                150deg,
+                #9500ff,
+                #09f,
+                #00DDFF
+        );
+        border-radius: 8px;
+        color: #fff;
+        display: flex;
+        font-size: 18px;
+        padding: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .btnelegir span{
+        background-color: #111;
+        padding: 16px 24px;
+        border-radius: 6px;
+        transition: .3s;
+    }
+    .btnelegir:hover span{
+        background: none;
+    }
+    .btnelegir:active{
+        transform: scale(0.9);
+    }
+
+    <!--                           -->>
+     .btnenviar {
+        border: 0;
+        background-image: linear-gradient(
+                150deg,
+                #9500ff,
+                #09f,
+                #00DDFF
+        );
+        border-radius: 8px;
+        color: #fff;
+        display: flex;
+        font-size: 18px;
+        padding: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .btnenviar span{
+        background-color: #111;
+        padding: 16px 24px;
+        border-radius: 6px;
+        transition: .3s;
+    }
+    .btnenviar:hover span{
+        background: none;
+    }
+    .btnenviar:active{
+        transform: scale(0.9);
+    }
+
+     <!--                           -->>
+     .btnGeneral {
+        border: 0;
+        background-image: linear-gradient(
+                150deg,
+                #9500ff,
+                #09f,
+                #00DDFF
+        );
+        border-radius: 8px;
+        color: #fff;
+        display: flex;
+        font-size: 18px;
+        padding: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .btnGeneral span{
+        background-color: #111;
+        padding: 16px 24px;
+        border-radius: 6px;
+        transition: .3s;
+    }
+    .btnGeneral:hover span{
+        background: none;
+    }
+    .btnGeneral:active{
+        transform: scale(0.9);
+    }
+    <!--                           -->>
+     .btnJugadores {
+        border: 0;
+        background-image: linear-gradient(
+                150deg,
+                #9500ff,
+                #09f,
+                #00DDFF
+        );
+        border-radius: 8px;
+        color: #fff;
+        display: flex;
+        font-size: 18px;
+        padding: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .btnJugadores span{
+        background-color: #111;
+        padding: 16px 24px;
+        border-radius: 6px;
+        transition: .3s;
+    }
+    .btnJugadores:hover span{
+        background: none;
+    }
+    .btnJugadores:active{
+        transform: scale(0.9);
+
+    }
+
+</style>
+
+
+<body>
+<h1 class="h1">INFORMACIÓN</h1>
+
+<!-- Botón para obtener la lista de ligas -->
+<a id="elegir-liga-form" method="post">
+    <button class="btnelegir" type="button" onclick="obtenerLigas()"><span>Elegir Liga</span></button>
+</a>
+
+
+
+<!-- Div para mostrar la lista de ligas -->
+<div class="ligas" id="ligas-container" style="display: none;">
+    <h2>Ligas disponibles:</h2>
+    <ul id="ligas-list"></ul>
+</div>
+
+<!-- Formulario para escribir el ID de la liga -->
+<form id="escribir-form" method="post" onsubmit="event.preventDefault(); obtenerEquipos()">
+    <label for="campo-escritura">Ingresa el ID de la liga:</label>
+    <input type="text" id="campo-escritura" name="idLiga" required>
+    <button class="btnenviar" type="submit"><span>Enviar</span></button>
+</form>
+
+<!-- Div para mostrar los equipos -->
+<div id="equipos-container" style="display: none;">
+    <h2>Equipos de la liga:</h2>
+    <ul id="equipos-list"></ul>
+</div>
+
+<!-- Formulario para ingresar el ID del equipo -->
+<form id="ingresar-equipo-form" method="post" onsubmit="event.preventDefault(); obtenerEquipo()">
+    <label for="campo-escritura-equipo">Ingresa el ID del equipo:</label>
+    <input type="text" id="campo-escritura-equipo" name="idEquipo" required>
+    <button class="btnGeneral" type="submit"><span>Información General</span></button>
+    <!-- Botón para obtener la información de los jugadores -->
+    <button class="btnJugadores" type="button" onclick="obtenerJugadores()"><span>Jugadores</span></button>
+</form>
+
+<!-- Div para mostrar la información del equipo -->
+<div id="equipo-info" style="display: none;">
+    <h2>Información del equipo:</h2>
+    <p><strong>Nombre:</strong> <span id="nombre-equipo"></span></p>
+    <p><strong>Abreviatura:</strong> <span id="abreviatura-equipo"></span></p>
+    <p><strong>Fundado en:</strong> <span id="fundado-equipo"></span></p>
+    <p><strong>Estadio:</strong> <span id="estadio-equipo"></span></p>
+</div>
+
+<!-- Div para mostrar la información de los jugadores -->
+<div id="jugadores-info" style="display: none;">
+    <h2>Jugadores del equipo:</h2>
+    <ul id="jugadores-list"></ul>
+</div>
+
+
+<script>
+    function obtenerLigas() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/elegir_liga');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                mostrarLigas(data);
+            } else {
+                alert('Error al obtener las ligas. Por favor, inténtalo nuevamente más tarde.');
+            }
+        };
+
+        xhr.send();
+    }
+
+    function mostrarLigas(ligas) {
+        const ligasContainer = document.getElementById('ligas-container');
+        const ligasList = document.getElementById('ligas-list');
+
+        // Vaciar la lista de ligas antes de mostrar las nuevas
+        ligasList.innerHTML = '';
+
+        // Mostrar las ligas en la lista
+        ligas.forEach(function (liga) {
+            const li = document.createElement('li');
+            li.textContent = liga.name;
+            ligasList.appendChild(li);
+        });
+
+        // Mostrar el contenedor de ligas
+        ligasContainer.style.display = 'block';
+    }
+
+    function obtenerEquipos() {
+        const xhr = new XMLHttpRequest();
+        const idLiga = document.getElementById('campo-escritura').value;
+        const url = `/equipos/${idLiga}`;
+
+        xhr.open('GET', url);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                mostrarEquipos(data);
+            } else {
+                alert('Error al obtener los equipos. Por favor, inténtalo nuevamente más tarde.');
+            }
+        };
+
+        xhr.send();
+    }
+
+    function mostrarEquipos(equipos) {
+        const equiposContainer = document.getElementById('equipos-container');
+        const equiposList = document.getElementById('equipos-list');
+
+        // Vaciar la lista de equipos antes de mostrar los nuevos
+        equiposList.innerHTML = '';
+
+        // Mostrar los equipos en la lista
+        equipos.forEach(function (equipo) {
+            const li = document.createElement('li');
+            li.textContent = equipo.name;
+            equiposList.appendChild(li);
+        });
+
+        // Mostrar el contenedor de equipos
+        equiposContainer.style.display = 'block';
+    }
+
+    function obtenerEquipo() {
+        const xhr = new XMLHttpRequest();
+        const idEquipo = document.getElementById('campo-escritura-equipo').value;
+        const url = `/equipo/${idEquipo}`;
+
+        xhr.open('GET', url);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                mostrarEquipoInfo(data);
+            } else {
+                alert('Error al obtener la información del equipo. Por favor, inténtalo nuevamente más tarde.');
+            }
+        };
+
+        xhr.send();
+    }
+
+    function mostrarEquipoInfo(equipo) {
+        const equipoInfo = document.getElementById('equipo-info');
+
+        // Mostrar la información del equipo en los elementos del DOM
+        document.getElementById('nombre-equipo').textContent = equipo.name;
+        document.getElementById('abreviatura-equipo').textContent = equipo.shortName;
+        document.getElementById('fundado-equipo').textContent = equipo.founded;
+        document.getElementById('estadio-equipo').textContent = equipo.venue;
+
+        // Mostrar el contenedor de información del equipo
+        equipoInfo.style.display = 'block';
+    }
+
+    function obtenerJugadores() {
+        const xhr = new XMLHttpRequest();
+        const idEquipo = document.getElementById('campo-escritura-equipo').value;
+        const url = `/jugadores/${idEquipo}`;
+
+        xhr.open('GET', url);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const jugadores = JSON.parse(xhr.responseText);
+                mostrarJugadoresInfo(jugadores);
+            } else {
+                alert('Error al obtener la información de los jugadores. Por favor, inténtalo nuevamente más tarde.');
+            }
+        };
+
+        xhr.send();
+    }
+
+    function mostrarJugadoresInfo(jugadores) {
+        const jugadoresInfo = document.getElementById('jugadores-info');
+        const jugadoresList = document.getElementById('jugadores-list');
+
+        // Vaciar la lista de jugadores antes de mostrar los nuevos
+        jugadoresList.innerHTML = '';
+
+        // Mostrar los jugadores en la lista
+        jugadores.forEach(function (jugador) {
+            const li = document.createElement('li');
+            li.textContent = jugador.name;
+            jugadoresList.appendChild(li);
+        });
+
+        // Mostrar el contenedor de información de los jugadores
+        jugadoresInfo.style.display = 'block';
+    }
+</script>
+</body>
+</html>
